@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Onyx Dispatch | Star Citizen Response</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand__mark">ONYX</div>
+        <div class="brand__text">
+          <div class="brand__title">Onyx Dispatch</div>
+          <div class="brand__subtitle">Rescue · Recovery · Rapid Response</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#request">Submit Request</a>
+        <a href="#dispatch">Dispatch Board</a>
+        <a href="#crews">Crews</a>
+      </nav>
+      <button class="btn btn-ghost">Sign In</button>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero__content">
+          <p class="eyebrow">Star Citizen Medical & Rescue Dispatch</p>
+          <h1>Keep crews, ships, and clients aligned in one streamlined console.</h1>
+          <p class="lede">From beacon to bedside: capture client details, assign the right crew, and update call status in a CRM-inspired workspace built for rapid response.</p>
+          <div class="hero__actions">
+            <a class="btn" href="#request">Start a rescue ticket</a>
+            <a class="btn btn-ghost" href="#dispatch">View live board</a>
+          </div>
+          <div class="stats">
+            <div>
+              <p class="stat__value" id="stat-active">8</p>
+              <p class="stat__label">Active calls</p>
+            </div>
+            <div>
+              <p class="stat__value">12</p>
+              <p class="stat__label">Crews on shift</p>
+            </div>
+            <div>
+              <p class="stat__value">9m</p>
+              <p class="stat__label">Avg. response</p>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>Rapid Intake</h3>
+          <p class="panel__sub">Accept beacons or manual calls in seconds. Everything routes directly to dispatch.</p>
+          <div class="checklist">
+            <div><span>✓</span> Pinpoint location & injury type</div>
+            <div><span>✓</span> Auto-prioritize by urgency</div>
+            <div><span>✓</span> Assign crews and ships instantly</div>
+          </div>
+          <p class="panel__footer">Built for medics, salvagers, escorts, and search-and-rescue teams.</p>
+        </div>
+      </section>
+
+      <section id="request" class="card-grid">
+        <div class="card">
+          <div class="card__header">
+            <div>
+              <p class="eyebrow">Client Intake</p>
+              <h2>Submit a rescue or support request</h2>
+              <p class="muted">Clients and dispatchers share the same form. New tickets land in the queue immediately.</p>
+            </div>
+          </div>
+          <form id="request-form" class="form">
+            <div class="form__row">
+              <label>Client name
+                <input name="clientName" placeholder="Callsign or contact" required />
+              </label>
+              <label>Comms channel
+                <input name="comms" placeholder="Spectrum handle or freq" required />
+              </label>
+            </div>
+            <div class="form__row">
+              <label>Location
+                <input name="location" placeholder="Planet · Moon · Grid" required />
+              </label>
+              <label>Urgency
+                <select name="urgency" required>
+                  <option value="Priority">Priority</option>
+                  <option value="High">High</option>
+                  <option value="Routine">Routine</option>
+                </select>
+              </label>
+            </div>
+            <div class="form__row">
+              <label>Support type
+                <select name="type" required>
+                  <option value="Medical">Medical</option>
+                  <option value="Extraction">Extraction</option>
+                  <option value="Recovery">Recovery</option>
+                  <option value="Escort">Escort</option>
+                </select>
+              </label>
+              <label>Preferred ship (optional)
+                <input name="preferredShip" placeholder="Cutlass Red, Carrack, etc." />
+              </label>
+            </div>
+            <label>Details
+              <textarea name="description" rows="3" placeholder="What happened? Injuries? Hostiles? Landing zone?" required></textarea>
+            </label>
+            <div class="form__actions">
+              <button class="btn" type="submit">Create ticket</button>
+              <span class="muted">Dispatch will confirm assignments and ETAs in-app.</span>
+            </div>
+          </form>
+        </div>
+        <div class="card">
+          <div class="card__header">
+            <div>
+              <p class="eyebrow">Live Requests</p>
+              <h2>Queue</h2>
+              <p class="muted">Sorted by urgency. Click to assign a crew and ship.</p>
+            </div>
+            <div class="chip" id="queue-count">0 waiting</div>
+          </div>
+          <div id="request-list" class="list"></div>
+        </div>
+      </section>
+
+      <section id="dispatch" class="board">
+        <div class="board__header">
+          <div>
+            <p class="eyebrow">Dispatcher Workspace</p>
+            <h2>CRM-style board</h2>
+            <p class="muted">Track every ticket, adjust status, assign ships, and push updates to crews.</p>
+          </div>
+          <div class="filters">
+            <label>Filter urgency
+              <select id="urgency-filter">
+                <option value="all">All</option>
+                <option value="Priority">Priority</option>
+                <option value="High">High</option>
+                <option value="Routine">Routine</option>
+              </select>
+            </label>
+            <label>Filter type
+              <select id="type-filter">
+                <option value="all">All</option>
+                <option value="Medical">Medical</option>
+                <option value="Extraction">Extraction</option>
+                <option value="Recovery">Recovery</option>
+                <option value="Escort">Escort</option>
+              </select>
+            </label>
+          </div>
+        </div>
+        <div class="board__columns" id="board-columns"></div>
+      </section>
+
+      <section id="crews" class="card-grid">
+        <div class="card">
+          <div class="card__header">
+            <div>
+              <p class="eyebrow">Crew Coordination</p>
+              <h2>Team roster</h2>
+              <p class="muted">Groups, medics, salvagers, and escorts organized by readiness.</p>
+            </div>
+          </div>
+          <div id="crew-list" class="list list--dense"></div>
+          <form id="crew-form" class="inline-form">
+            <input name="crewName" placeholder="Crew name" required />
+            <input name="crewFocus" placeholder="Role" required />
+            <input name="crewComms" placeholder="Comms" required />
+            <button class="btn" type="submit">Add crew</button>
+          </form>
+        </div>
+        <div class="card">
+          <div class="card__header">
+            <div>
+              <p class="eyebrow">Hangar</p>
+              <h2>Ships</h2>
+              <p class="muted">Match the right hull to the mission.</p>
+            </div>
+          </div>
+          <div id="ship-list" class="list list--dense"></div>
+          <form id="ship-form" class="inline-form">
+            <input name="shipName" placeholder="Ship name" required />
+            <input name="shipRole" placeholder="Role" required />
+            <input name="shipCapacity" placeholder="Capacity" required />
+            <button class="btn" type="submit">Add ship</button>
+          </form>
+        </div>
+        <div class="card card--ghost">
+          <div class="card__header">
+            <div>
+              <p class="eyebrow">Activity Feed</p>
+              <h2>Signal traffic</h2>
+              <p class="muted">Latest updates and movements.</p>
+            </div>
+          </div>
+          <div id="activity" class="feed"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="app.js" type="module"></script>
+</body>
+</html>
