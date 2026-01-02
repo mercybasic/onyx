@@ -1,1 +1,17 @@
+# Onyx Dispatch
 
+A streamlined CRM-style console for Star Citizen medical, rescue, and support dispatchers. This single-page experience offers a hero intake form for clients, a live ticket queue, a dispatcher board, and roster management for crews and ships.
+
+## Getting started
+
+No build step is required. Open `index.html` in a modern browser to explore the prototype.
+
+Key sections:
+- **Hero intake** – narrative overview with quick links into the workflow.
+- **Request form** – captures client, location, urgency, and mission details; new tickets appear instantly in the queue and board.
+- **Dispatch board** – CRM-inspired columns that let dispatchers assign crews, ships, and statuses with filters.
+- **Crews & ships** – roster and hangar lists with inline add forms plus a live activity feed.
+
+## Notes
+- Data is in-memory only for demonstration; refresh clears updates.
+- Icons and gradients are designed to keep the UI readable in low-light cockpits.
